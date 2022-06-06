@@ -47,7 +47,10 @@ def main(filepath: str):
 		print(productEntity["name"] + ",", end="")
 		print('https://voila.ca/products/' + productEntity["retailerProductId"] + '/details/,', end="")
 		print(productEntity["price"]["current"]["amount"] + ',', end="")
-		print(productEntity["offer"]["description"] + ',', end="")
+		if "offer" in productEntity:
+			print(productEntity["offer"]["description"] + ',', end="")
+		else:
+			print("No sale,", end="")
 		if "original" in productEntity["price"]:
 			print(productEntity["price"]["original"]["amount"] + ",", end="")
 		else:

@@ -12,7 +12,8 @@ from bs4 import BeautifulSoup
 
 def convert_possible_cents(price_string):
 	if price_string[-1] == u'\xa2':
-		return '0.' + price_string[0:len(price_string)-1].zfill(2)
+		tempnum = int(price_string[0:len(price_string)-1])
+		return '0.' + str(tempnum).zfill(2)
 	else:
 		return price_string
 	

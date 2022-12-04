@@ -6,13 +6,13 @@ Run as:
 
 	or even
 	> python voila_scraper_sf.py filepath --output mycart.csv
-''' 
+'''
 
 import json
 import typer
 import sys
 import csv
-from bs4 import BeautifulSoup	
+from bs4 import BeautifulSoup
 
 def main(filepath: str,
 	output: str = typer.Option(None, help="Path to save output csv file."),
@@ -35,12 +35,13 @@ def main(filepath: str,
 	if debug:
 		print(soup.prettify())
 		return
-	
-	cart = soup.find_all(attrs={"class": "flex__Flex-sc-la2qln-0 base__BodyContainer-sc-1mnb0pd-34 jZCGsu cZwzDt"})
+
+	cart = soup.find(attrs={"data-synthetics": "product-list"})
 
 	for item in cart:
-		
+
 		quantitytag = item.find(attrs={"data-test": "quantity-in-basket"})
+		if not quantitytag: continue
 
 		quantity = quantitytag.get("value")
 
@@ -48,7 +49,7 @@ def main(filepath: str,
 
 		eachpricetag = item.find(attrs={"data-test": "fop-price"})
 
-		deptagparent = item.parent.find(attrs={"aria-label": "Deposit charge will be applied"})
+		deptagparent = item.find(attrs={"aria-label": "Deposit charge will be applied"})
 
 		writer.writerow({
 			"Quantity": str(quantity),

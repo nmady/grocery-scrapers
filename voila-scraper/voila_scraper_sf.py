@@ -45,6 +45,8 @@ def main(filepath: str,
 
 		quantity = quantitytag.get("value")
 
+		titletag = item.find(attrs={"data-test": "fop-title"})
+
 		linktag = item.find(attrs={"data-test": "fop-product-link"})
 
 		eachpricetag = item.find(attrs={"data-test": "fop-price"})
@@ -53,7 +55,7 @@ def main(filepath: str,
 
 		writer.writerow({
 			"Quantity": str(quantity),
-			"Name": linktag.string,
+			"Name": titletag.string,
 			"Link": linktag.get("href"),
 			"Price Each": eachpricetag.contents[0],
 			"Deposit": deptagparent.span.string[9:] if deptagparent else ""

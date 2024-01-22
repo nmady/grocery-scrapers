@@ -41,7 +41,11 @@ def main(filepath: str,
                 linktag = item.find("a", {"link-identifier": "itemClick"})
 
                 eachpricestr = item.find("div", {"data-testid": "productDescription"}).text
-                eachprice = parse_price(eachpricestr)
+                eachprice = None
+                try:
+                        parse_price(eachpricestr)
+                except:
+                        pass
                 
                 discountedpricetag = item.find(attrs={"data-testid": "item-price"})
                 discountedprice = parse_price(discountedpricetag.string) if discountedpricetag \
@@ -56,8 +60,10 @@ def main(filepath: str,
                 quantitytag = quantitystepper.find("button").next_sibling
                 quantity = int(quantitytag.string)
 
-                savings = quantity * (eachprice - actualprice)
-                assert(savings >= 0)
+                savings = None
+                if eachprice and actualprice:
+                        savings = quantity * (eachprice - actualprice)
+                        assert(savings >= 0)
 
                 writer.writerow({
                         "Quantity": str(quantity),

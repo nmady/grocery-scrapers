@@ -19,8 +19,8 @@ def parse_price(price_string):
         return Decimal(price_string)
 
 def main(filepath: str,
-         output: str = typer.Option(None, help="Path to save output csv file."),
-         """
+         output: str = typer.Option(None, help="Path to save output csv file.")):
+        """
          Scrape your Voila order from a saved html file at FILEPATH.
          Visit your cart and save the website an html file.
          """
